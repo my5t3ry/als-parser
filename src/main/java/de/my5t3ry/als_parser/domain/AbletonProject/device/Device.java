@@ -10,7 +10,7 @@ import javax.persistence.Id;
  * since: 30.08.17
  */
 @Entity
-public class Device {
+public class Device implements Comparable<Device> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,5 +50,10 @@ public class Device {
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
+    }
+
+    @Override
+    public int compareTo(final Device o) {
+        return this.count.compareTo(o.count);
     }
 }

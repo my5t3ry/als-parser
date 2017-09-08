@@ -1,4 +1,6 @@
 # simple java library for parsing Ableton als project files
+
+works for Ableton version >= 8
 ## Usage ##
 
 checkout with git:
