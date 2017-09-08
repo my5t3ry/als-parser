@@ -47,7 +47,7 @@ public class AbletonFileParser {
             Document document = builder.parse(new FileInputStream(new File(System.getProperty("java.io.tmpdir") + file.getName())));
             return abletonFileFactory.build(document, file.getName());
         } catch (IOException e) {
-            System.out.println("Could not read File, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
+            System.out.println("Could not read file, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
             return null;
         } catch (ParserConfigurationException e) {
             throw new IllegalStateException("Could not read File:'" + file.getAbsolutePath() + "'", e);
