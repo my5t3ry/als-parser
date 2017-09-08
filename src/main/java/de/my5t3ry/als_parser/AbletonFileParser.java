@@ -32,13 +32,15 @@ public class AbletonFileParser {
     }
 
     public AbletonProject parse(final File file) {
+        if (file.isDirectory()) {
+            throw new IllegalArgumentException("File is directory, pleas use parseDirectoryInstead()");
+        }
         final GZipFile gZipFile = new GZipFile(file);
-        final File outputFile = new File(System.getProperty("java.io.tmpdir") + file.getName());
-        gZipFile.decompress(outputFile);
+        gZipFile.decompress(new File(System.getProperty("java.io.tmpdir") + file.getName()));
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
-            Document document = builder.parse(new FileInputStream(outputFile));
+            Document document = builder.parse(new FileInputStream(new File(System.getProperty("java.io.tmpdir") + file.getName())));
             return abletonFileFactory.build(document, file.getName());
         } catch (IOException e) {
             throw new IllegalStateException("Could not read File:'" + file.getAbsolutePath() + "'", e);
