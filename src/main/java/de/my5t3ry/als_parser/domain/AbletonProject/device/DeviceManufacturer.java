@@ -21,4 +21,8 @@ public class DeviceManufacturer {
     public DeviceManufacturer(final String manufacturerName) {
         this.name = manufacturerName;
     }
+
+    public String getName() {
+        return name;
+    }
 }

@@ -29,6 +29,14 @@ public class Device {
         count++;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
