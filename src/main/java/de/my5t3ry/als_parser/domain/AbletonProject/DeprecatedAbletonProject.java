@@ -11,5 +11,8 @@ public class DeprecatedAbletonProject extends AbletonProject{
     public DeprecatedAbletonProject() {
         this.internalDevices = new ArrayList<>();
         this.externalDevices = new ArrayList<>();
+        this.audioTracksCount = 0;
+        this.groupTracksCount = 0;
+        this.midiTracksCount = 0;
     }
 }
