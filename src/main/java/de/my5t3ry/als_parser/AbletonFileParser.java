@@ -60,7 +60,7 @@ public class AbletonFileParser {
     }
 
     private AbletonProject printErrorLog(final Exception e, final File file) {
-        logger.info("Could not read file, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
+        logger.debug("Could not read file, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
         logger.debug(e.getMessage());
         return null;
     }
