@@ -26,7 +26,7 @@ parse als file:
 ```
 final AbletonProjectParser alsParser = new AbletonProjectParser();
 AbletonProjectParser result = alsParser.parse(new File("foo.als"));
-result.printSummary();
+System.out.println(result.getTotalTracks());
 ```
 
 
