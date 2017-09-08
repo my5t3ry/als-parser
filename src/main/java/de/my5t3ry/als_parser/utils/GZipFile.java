@@ -18,9 +18,8 @@ public class GZipFile {
         this.input = input;
     }
 
-    public void decompress(final File output) {
+    public void decompress(final File output) throws IOException {
         byte[] buffer = new byte[1024];
-        try {
             GZIPInputStream gzip =
                     new GZIPInputStream(new FileInputStream(input));
             FileOutputStream out =
@@ -31,8 +30,6 @@ public class GZipFile {
             }
             gzip.close();
             out.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+
     }
 }

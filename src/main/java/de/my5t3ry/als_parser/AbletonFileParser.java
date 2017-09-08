@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * created by: sascha.bast
@@ -28,7 +29,10 @@ public class AbletonFileParser {
         final List<AbletonProject> result = new ArrayList<>();
         final String[] validExtension = {"als"};
         FileUtils.listFiles(directory, validExtension, true).forEach(curFile -> result.add(parse((File) curFile)));
-        return result;
+        return result
+                .stream()
+                .filter(p -> p != null)
+                .collect(Collectors.toList());
     }
 
     public AbletonProject parse(final File file) {
@@ -36,14 +40,15 @@ public class AbletonFileParser {
             throw new IllegalArgumentException("File is directory, pleas use parseDirectoryInstead()");
         }
         final GZipFile gZipFile = new GZipFile(file);
-        gZipFile.decompress(new File(System.getProperty("java.io.tmpdir") + file.getName()));
         try {
+            gZipFile.decompress(new File(System.getProperty("java.io.tmpdir") + file.getName()));
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
             Document document = builder.parse(new FileInputStream(new File(System.getProperty("java.io.tmpdir") + file.getName())));
             return abletonFileFactory.build(document, file.getName());
         } catch (IOException e) {
-            throw new IllegalStateException("Could not read File:'" + file.getAbsolutePath() + "'", e);
+            System.out.println("Could not read File, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
+            return null;
         } catch (ParserConfigurationException e) {
             throw new IllegalStateException("Could not read File:'" + file.getAbsolutePath() + "'", e);
         } catch (SAXException e) {
