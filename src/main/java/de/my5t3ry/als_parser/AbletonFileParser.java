@@ -2,6 +2,7 @@ package de.my5t3ry.als_parser;
 
 import de.my5t3ry.als_parser.domain.AbletonProject.AbletonFileFactory;
 import de.my5t3ry.als_parser.domain.AbletonProject.AbletonProject;
+import de.my5t3ry.als_parser.domain.AbletonProject.DeprecatedAbletonProject;
 import de.my5t3ry.als_parser.utils.GZipFile;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -17,7 +18,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * created by: sascha.bast
@@ -33,10 +33,7 @@ public class AbletonFileParser {
         final List<AbletonProject> result = new ArrayList<>();
         final String[] validExtension = {"als"};
         FileUtils.listFiles(directory, validExtension, true).forEach(curFile -> result.add(parse((File) curFile)));
-        return result
-                .stream()
-                .filter(p -> p != null)
-                .collect(Collectors.toList());
+        return result;
     }
 
     public AbletonProject parse(final File file) {
@@ -62,6 +59,6 @@ public class AbletonFileParser {
     private AbletonProject printErrorLog(final Exception e, final File file) {
         logger.debug("Could not read file, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
         logger.debug(e.getMessage());
-        return null;
+        return new DeprecatedAbletonProject();
     }
 }
