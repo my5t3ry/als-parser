@@ -4,6 +4,8 @@ import de.my5t3ry.als_parser.domain.AbletonProject.AbletonFileFactory;
 import de.my5t3ry.als_parser.domain.AbletonProject.AbletonProject;
 import de.my5t3ry.als_parser.utils.GZipFile;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -22,6 +24,8 @@ import java.util.stream.Collectors;
  * since: 30.08.17
  */
 public class AbletonFileParser {
+
+    Logger logger = LoggerFactory.getLogger(AbletonFileParser.class);
 
     private AbletonFileFactory abletonFileFactory = new AbletonFileFactory();
 
@@ -47,12 +51,17 @@ public class AbletonFileParser {
             Document document = builder.parse(new FileInputStream(new File(System.getProperty("java.io.tmpdir") + file.getName())));
             return abletonFileFactory.build(document, file.getName());
         } catch (IOException e) {
-            System.out.println("Could not read file, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
-            return null;
+            return printErrorLog(e, file);
         } catch (ParserConfigurationException e) {
-            throw new IllegalStateException("Could not read File:'" + file.getAbsolutePath() + "'", e);
+            return printErrorLog(e, file);
         } catch (SAXException e) {
-            throw new IllegalStateException("Could not read File:'" + file.getAbsolutePath() + "'", e);
+            return printErrorLog(e, file);
         }
+    }
+
+    private AbletonProject printErrorLog(final Exception e, final File file) {
+        logger.info("Could not read file, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
+        logger.debug(e.getMessage());
+        return null;
     }
 }
