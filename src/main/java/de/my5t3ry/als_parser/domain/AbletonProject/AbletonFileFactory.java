@@ -46,13 +46,13 @@ public class AbletonFileFactory {
     private final String MIDI_TRACKS = "count(.//LiveSet//Tracks//MidiTrack)";
     private final String AUDIO_TRACKS = "count(.//LiveSet//Tracks//AudioTrack)";
 
-    public final AbletonProject build(final File file) {
+    public final AbletonProject build(final File decompressedFile,final File file) {
         final AbletonProject result = new AbletonProject();
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
-            Document doc = builder.parse(file);
-            result.name = file.getName();
+            Document doc = builder.parse(decompressedFile);
+            result.name = decompressedFile.getName();
             result.internalDevices = getDevices(doc, INTERNAL_DEVICES_PATH, new InternalDeviceNameExtractor());
             final List<Device> externalDevice = getDevices(doc, EXTERNAL_VST, new ExternalDeviceNameExtractor());
             externalDevice.addAll(getDevices(doc, EXTERNAL_AU, new ExternalDeviceNameExtractor()));
@@ -63,11 +63,11 @@ public class AbletonFileFactory {
             result.audioTracksCount = getTrackCount(doc, AUDIO_TRACKS);
             result.creationFileTime = getCreationTimeStamp(file);
         } catch (IOException e) {
-            return printErrorLog(e, file);
+            return printErrorLog(e, decompressedFile);
         } catch (ParserConfigurationException e) {
-            return printErrorLog(e, file);
+            return printErrorLog(e, decompressedFile);
         } catch (SAXException e) {
-            return printErrorLog(e, file);
+            return printErrorLog(e, decompressedFile);
         }
         return result;
     }

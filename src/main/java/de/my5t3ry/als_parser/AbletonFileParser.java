@@ -37,7 +37,7 @@ public class AbletonFileParser {
         final GZipFile gZipFile = new GZipFile(file);
         try {
             gZipFile.decompress(new File(System.getProperty("java.io.tmpdir") + file.getName()));
-            return abletonFileFactory.build(new File(System.getProperty("java.io.tmpdir") + file.getName()));
+            return abletonFileFactory.build(new File(System.getProperty("java.io.tmpdir") + file.getName()), file);
         } catch (IOException e) {
             logger.debug("Could not read file, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
             logger.debug(e.getMessage());
