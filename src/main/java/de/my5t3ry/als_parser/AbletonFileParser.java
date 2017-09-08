@@ -7,14 +7,8 @@ import de.my5t3ry.als_parser.utils.GZipFile;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,22 +37,12 @@ public class AbletonFileParser {
         final GZipFile gZipFile = new GZipFile(file);
         try {
             gZipFile.decompress(new File(System.getProperty("java.io.tmpdir") + file.getName()));
-            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = builderFactory.newDocumentBuilder();
-            Document document = builder.parse(new FileInputStream(new File(System.getProperty("java.io.tmpdir") + file.getName())));
-            return abletonFileFactory.build(document, file.getName());
+            return abletonFileFactory.build(new File(System.getProperty("java.io.tmpdir") + file.getName()));
         } catch (IOException e) {
-            return printErrorLog(e, file);
-        } catch (ParserConfigurationException e) {
-            return printErrorLog(e, file);
-        } catch (SAXException e) {
-            return printErrorLog(e, file);
+            logger.debug("Could not read file, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
+            logger.debug(e.getMessage());
+            return new DeprecatedAbletonProject();
         }
     }
 
-    private AbletonProject printErrorLog(final Exception e, final File file) {
-        logger.debug("Could not read file, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
-        logger.debug(e.getMessage());
-        return new DeprecatedAbletonProject();
-    }
 }

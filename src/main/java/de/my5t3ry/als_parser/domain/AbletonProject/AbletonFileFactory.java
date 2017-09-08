@@ -5,13 +5,24 @@ import de.my5t3ry.als_parser.domain.AbletonProject.device.DeviceManufacturer;
 import de.my5t3ry.als_parser.utils.device_name_extractor.ExternalDeviceNameExtractor;
 import de.my5t3ry.als_parser.utils.device_name_extractor.IExtractDeviceNames;
 import de.my5t3ry.als_parser.utils.device_name_extractor.InternalDeviceNameExtractor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,6 +34,9 @@ import java.util.Set;
  */
 public class AbletonFileFactory {
 
+    Logger logger = LoggerFactory.getLogger(AbletonFileFactory.class);
+
+
     private final XPath xPath = XPathFactory.newInstance().newXPath();
     private final String INTERNAL_DEVICES_PATH = ".//LiveSet//Tracks//DeviceChain//Devices[1]/*";
     private final String EXTERNAL_VST = ".//LiveSet//Tracks//DeviceChain//Devices//PluginDevice//PluginDesc//VstPluginInfo//PlugName";
@@ -32,18 +46,37 @@ public class AbletonFileFactory {
     private final String MIDI_TRACKS = "count(.//LiveSet//Tracks//MidiTrack)";
     private final String AUDIO_TRACKS = "count(.//LiveSet//Tracks//AudioTrack)";
 
-    public final AbletonProject build(final Document doc, final String name) {
+    public final AbletonProject build(final File file) {
         final AbletonProject result = new AbletonProject();
-        result.name = name;
-        result.internalDevices = getDevices(doc, INTERNAL_DEVICES_PATH, new InternalDeviceNameExtractor());
-        final List<Device> externalDevice = getDevices(doc, EXTERNAL_VST, new ExternalDeviceNameExtractor());
-        externalDevice.addAll(getDevices(doc, EXTERNAL_AU, new ExternalDeviceNameExtractor()));
-        result.externalDevices = externalDevice;
-        result.manufacturers = getManufacturers(doc);
-        result.groupTracksCount = getTrackCount(doc, GROUP_TRACKS);
-        result.midiTracksCount = getTrackCount(doc, MIDI_TRACKS);
-        result.audioTracksCount = getTrackCount(doc, AUDIO_TRACKS);
+        try {
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            Document doc = builder.parse(file);
+            result.name = file.getName();
+            result.internalDevices = getDevices(doc, INTERNAL_DEVICES_PATH, new InternalDeviceNameExtractor());
+            final List<Device> externalDevice = getDevices(doc, EXTERNAL_VST, new ExternalDeviceNameExtractor());
+            externalDevice.addAll(getDevices(doc, EXTERNAL_AU, new ExternalDeviceNameExtractor()));
+            result.externalDevices = externalDevice;
+            result.manufacturers = getManufacturers(doc);
+            result.groupTracksCount = getTrackCount(doc, GROUP_TRACKS);
+            result.midiTracksCount = getTrackCount(doc, MIDI_TRACKS);
+            result.audioTracksCount = getTrackCount(doc, AUDIO_TRACKS);
+            result.creationFileTime = getCreationTimeStamp(file);
+        } catch (IOException e) {
+            return printErrorLog(e, file);
+        } catch (ParserConfigurationException e) {
+            return printErrorLog(e, file);
+        } catch (SAXException e) {
+            return printErrorLog(e, file);
+        }
+
         return result;
+    }
+
+    private FileTime getCreationTimeStamp(final File doc) throws IOException {
+        BasicFileAttributes attr = Files.readAttributes(doc.toPath(), BasicFileAttributes.class);
+        return attr.creationTime();
+
     }
 
     private Integer getTrackCount(final Document doc, final String path) {
@@ -85,5 +118,12 @@ public class AbletonFileFactory {
             throw new IllegalStateException("Could not read Ableton File", e);
         }
         return result;
+    }
+
+
+    private AbletonProject printErrorLog(final Exception e, final File file) {
+        logger.debug("Could not read file, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
+        logger.debug(e.getMessage());
+        return new DeprecatedAbletonProject();
     }
 }

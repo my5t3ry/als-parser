@@ -4,6 +4,8 @@ import de.my5t3ry.als_parser.domain.AbletonProject.device.Device;
 import de.my5t3ry.als_parser.domain.AbletonProject.device.DeviceManufacturer;
 
 import javax.persistence.*;
+import java.nio.file.attribute.FileTime;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +34,9 @@ public class AbletonProject {
     protected Integer groupTracksCount;
     protected Integer midiTracksCount;
     protected Integer audioTracksCount;
+    public FileTime creationFileTime;
+    SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+
 
     public Integer getTotalTracks() {
         return groupTracksCount + midiTracksCount + audioTracksCount;
@@ -65,4 +70,11 @@ public class AbletonProject {
         return internalDevices.stream().collect(Collectors.summingInt(d -> d.getCount())) + externalDevices.stream().collect(Collectors.summingInt(d -> d.getCount()));
     }
 
+    public String getCreationFileTimeAsString() {
+        return df.format(creationFileTime.toMillis());
+    }
+
+    public FileTime getCreationFileTime() {
+        return creationFileTime;
+    }
 }
