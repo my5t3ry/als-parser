@@ -11,10 +11,12 @@ import javax.persistence.Id;
  */
 @Entity
 public class DeviceManufacturer {
-    private final String name;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
+
+    private final String name;
 
     public DeviceManufacturer(final String manufacturerName) {
         this.name = manufacturerName;

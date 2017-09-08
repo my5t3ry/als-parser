@@ -12,7 +12,6 @@ import javax.persistence.Id;
 @Entity
 public class Device {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;

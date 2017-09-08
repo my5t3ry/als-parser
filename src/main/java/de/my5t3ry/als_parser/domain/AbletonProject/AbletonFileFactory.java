@@ -23,7 +23,6 @@ import java.util.Set;
  */
 public class AbletonFileFactory {
 
-
     private final XPath xPath = XPathFactory.newInstance().newXPath();
     private final String INTERNAL_DEVICES_PATH = ".//LiveSet//Tracks//DeviceChain//Devices[1]/*";
     private final String EXTERNAL_VST = ".//LiveSet//Tracks//DeviceChain//Devices//PluginDevice//PluginDesc//VstPluginInfo//PlugName";
@@ -32,10 +31,6 @@ public class AbletonFileFactory {
     private final String GROUP_TRACKS = "count(.//LiveSet//Tracks//GroupTrack)";
     private final String MIDI_TRACKS = "count(.//LiveSet//Tracks//MidiTrack)";
     private final String AUDIO_TRACKS = "count(.//LiveSet//Tracks//AudioTrack)";
-//    private final String CREATOR = ".//at";
-
-
-
 
     public final AbletonProject build(final Document doc, final String name) {
         final AbletonProject result = new AbletonProject();
@@ -58,7 +53,6 @@ public class AbletonFileFactory {
             throw new IllegalStateException("Could not read Ableton File", e);
         }
     }
-
 
     private List<DeviceManufacturer> getManufacturers(final Document doc) {
         final Set<DeviceManufacturer> result = new HashSet<>();
