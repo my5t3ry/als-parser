@@ -5,6 +5,7 @@ import de.my5t3ry.als_parser.domain.AbletonProject.device.DeviceManufacturer;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * created by: sascha.bast
@@ -58,6 +59,10 @@ public class AbletonProject {
 
     public Integer getAudioTracksCount() {
         return audioTracksCount;
+    }
+
+    public Integer getTotalDeviceCount() {
+        return internalDevices.stream().collect(Collectors.summingInt(d -> d.getCount())) + externalDevices.stream().collect(Collectors.summingInt(d -> d.getCount()));
     }
 
 }
