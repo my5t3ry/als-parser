@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 public class AbletonProject {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
@@ -60,4 +59,5 @@ public class AbletonProject {
     public Integer getAudioTracksCount() {
         return audioTracksCount;
     }
+
 }
