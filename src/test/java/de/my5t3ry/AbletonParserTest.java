@@ -5,6 +5,7 @@ import de.my5t3ry.als_parser.domain.AbletonProject.AbletonProject;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -16,7 +17,7 @@ public class AbletonParserTest {
     final AbletonFileParser cut = new AbletonFileParser();
 
     @Test
-    public void shouldWork() throws Exception {
+    public void parseFile() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("20170428.als").getFile());
         final AbletonProject abletonProject = cut.parse(file);
@@ -26,5 +27,12 @@ public class AbletonParserTest {
         assertEquals(abletonProject.getManufacturers().size(), 4);
         assertEquals(abletonProject.getMidiTracksCount(), new Integer(22));
         assertEquals(abletonProject.getAudioTracksCount(), new Integer(0));
+    }
+    @Test
+    public void parseDirectory() throws Exception {
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("testDir").getFile());
+        final List<AbletonProject> result = cut.parseDirectory(file);
+        assertEquals(result.size(),2);
     }
 }
