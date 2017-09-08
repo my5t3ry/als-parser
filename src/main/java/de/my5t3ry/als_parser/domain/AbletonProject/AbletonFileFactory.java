@@ -69,7 +69,6 @@ public class AbletonFileFactory {
         } catch (SAXException e) {
             return printErrorLog(e, file);
         }
-
         return result;
     }
 
