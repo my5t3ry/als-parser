@@ -4,7 +4,7 @@
 
     <groupId>de.my5t3ry</groupId>
     <artifactId>als-parser</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>als-parser</name>
@@ -12,18 +12,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
     </properties>
 
     <dependencies>
-       
-
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>1.0.0.Final</version>
         </dependency>
-      
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
