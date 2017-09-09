@@ -3,19 +3,19 @@
 works for Ableton version >= 8
 ## Usage ##
 
-clone with git:
+clone:
 ```
 git clone https://github.com/my5t3ry/als-parser.git
 ```
 
-install to local mvn repository:
+install to local repository:
 ```
 cd als-parser
 mvn clean install
 ```
 
 
-add mvn dependency:
+add dependency:
 ```
 <dependency>
     <groupId>de.my5t3ry</groupId>
@@ -24,7 +24,7 @@ add mvn dependency:
 </dependency>
 ```
 
-parse als file:
+usage:
 ```
 final AbletonProjectParser alsParser = new AbletonProjectParser();
 AbletonProjectParser result = alsParser.parse(new File("foo.als"));
