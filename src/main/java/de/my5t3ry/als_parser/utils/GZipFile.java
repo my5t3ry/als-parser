@@ -11,8 +11,8 @@ import java.util.zip.GZIPInputStream;
  * since: 29.08.17
  */
 public class GZipFile {
-    private final File input;
 
+    private final File input;
 
     public GZipFile(final File input) {
         this.input = input;
@@ -30,6 +30,5 @@ public class GZipFile {
             }
             gzip.close();
             out.close();
-
     }
 }

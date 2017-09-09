@@ -7,6 +7,5 @@ import org.w3c.dom.Node;
  * since: 30.08.17
  */
 public interface IExtractDeviceNames {
-
-    public String extractName(final Node node);
+    String extractName(final Node node);
 }
