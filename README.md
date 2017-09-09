@@ -27,8 +27,10 @@ add dependency:
 usage:
 ```
 final AbletonProjectParser alsParser = new AbletonProjectParser();
-AbletonProjectParser result = alsParser.parse(new File("foo.als"));
+final AbletonProject result = alsParser.parse(new File("foo.als"));
 System.out.println(result.getTotalTracks());
+final List<AbletonProject> listResult = alsParser.parseDirectory(new File("/projects/path"));
+listResult.foreach(p -> System.out.println(p.getTotalTracks()));
 ```
 
 
