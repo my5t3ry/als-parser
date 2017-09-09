@@ -44,5 +44,4 @@ public class AbletonFileParser {
             return new DeprecatedAbletonProject();
         }
     }
-
 }
