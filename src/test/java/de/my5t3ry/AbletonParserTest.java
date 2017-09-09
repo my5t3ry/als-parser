@@ -10,7 +10,8 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 
 /**
- * Unit test for simple App.
+ * created by: sascha.bast
+ * since: 30.08.17
  */
 public class AbletonParserTest {
 
