@@ -23,7 +23,7 @@ public class Device implements Comparable<Device> {
         this.count = 1;
     }
 
-    public void  addDevice(){
+    public void addDevice() {
         count++;
     }
 

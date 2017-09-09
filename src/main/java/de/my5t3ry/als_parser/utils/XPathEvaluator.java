@@ -13,7 +13,7 @@ import javax.xml.xpath.XPathFactory;
  * since: 09.09.17
  */
 public class XPathEvaluator {
-    
+
     private static final String DTM_MANAGER_NAME = "com.sun.org.apache.xml.internal.dtm.DTMManager";
     private static final String DTM_MANAGER_VALUE = "com.sun.org.apache.xml.internal.dtm.ref.DTMManagerDefault";
 

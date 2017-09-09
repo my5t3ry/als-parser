@@ -28,12 +28,12 @@ public class AbletonParserTest {
         assertEquals(abletonProject.getMidiTracksCount(), new Integer(22));
         assertEquals(abletonProject.getAudioTracksCount(), new Integer(0));
     }
-    
+
     @Test
     public void parseDirectory() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("testDir").getFile());
         final List<AbletonProject> result = cut.parseDirectory(file);
-        assertEquals(result.size(),2);
+        assertEquals(result.size(), 2);
     }
 }

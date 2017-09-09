@@ -20,15 +20,15 @@ public class GZipFile {
 
     public void decompress(final File output) throws IOException {
         byte[] buffer = new byte[1024];
-            GZIPInputStream gzip =
-                    new GZIPInputStream(new FileInputStream(input));
-            FileOutputStream out =
-                    new FileOutputStream(output);
-            int len;
-            while ((len = gzip.read(buffer)) > 0) {
-                out.write(buffer, 0, len);
-            }
-            gzip.close();
-            out.close();
+        GZIPInputStream gzip =
+                new GZIPInputStream(new FileInputStream(input));
+        FileOutputStream out =
+                new FileOutputStream(output);
+        int len;
+        while ((len = gzip.read(buffer)) > 0) {
+            out.write(buffer, 0, len);
+        }
+        gzip.close();
+        out.close();
     }
 }
