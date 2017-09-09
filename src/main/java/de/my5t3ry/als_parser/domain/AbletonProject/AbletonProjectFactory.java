@@ -77,7 +77,6 @@ public class AbletonProjectFactory {
 
     private Integer getTrackCount(final Document doc, final String path) {
         return ((Double) XPathEvaluator.query(path, doc, XPathConstants.NUMBER)).intValue();
-
     }
 
     private List<DeviceManufacturer> getManufacturers(final Document doc) {
