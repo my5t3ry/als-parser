@@ -20,22 +20,22 @@ public class AbletonProject {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
-    protected String name;
+    String name;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    protected List<Device> internalDevices;
+    List<Device> internalDevices;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    protected List<Device> externalDevices;
+    List<Device> externalDevices;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    protected List<DeviceManufacturer> manufacturers;
+    List<DeviceManufacturer> manufacturers;
 
-    protected Integer groupTracksCount;
-    protected Integer midiTracksCount;
-    protected Integer audioTracksCount;
-    public FileTime creationFileTime;
-    SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+    Integer groupTracksCount;
+    Integer midiTracksCount;
+    Integer audioTracksCount;
+    FileTime creationFileTime;
+    private SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
 
     public Integer getTotalTracks() {

@@ -104,8 +104,8 @@ public class AbletonFileFactory {
         return new ArrayList<>(result);
     }
 
-    public List<Device> getDevices(final Document doc, final String path, final IExtractDeviceNames deviceNameExtractor) {
-        final List<Device> result = new ArrayList();
+    private ArrayList<Device> getDevices(final Document doc, final String path, final IExtractDeviceNames deviceNameExtractor) {
+        final ArrayList<Device> result = new ArrayList();
         try {
             final NodeList nodeList = (NodeList) xPath.compile(path).evaluate(doc, XPathConstants.NODESET);
             for (int i = 0; i < nodeList.getLength(); i++) {

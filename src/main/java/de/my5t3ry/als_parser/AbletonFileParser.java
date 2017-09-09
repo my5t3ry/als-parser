@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class AbletonFileParser {
 
-    Logger logger = LoggerFactory.getLogger(AbletonFileParser.class);
+    private Logger logger = LoggerFactory.getLogger(AbletonFileParser.class);
 
     private AbletonFileFactory abletonFileFactory = new AbletonFileFactory();
 
