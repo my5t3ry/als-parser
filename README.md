@@ -3,7 +3,7 @@
 works for Ableton version >= 8
 ## Usage ##
 
-checkout with git:
+clone with git:
 ```
 git clone https://github.com/my5t3ry/als-parser.git
 ```
