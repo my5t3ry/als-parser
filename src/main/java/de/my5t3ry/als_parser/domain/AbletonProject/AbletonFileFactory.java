@@ -61,7 +61,6 @@ public class AbletonFileFactory {
             result.groupTracksCount = getTrackCount(doc, GROUP_TRACKS);
             result.midiTracksCount = getTrackCount(doc, MIDI_TRACKS);
             result.audioTracksCount = getTrackCount(doc, AUDIO_TRACKS);
-            result.creationFileTime = getCreationTimeStamp(file);
         } catch (IOException e) {
             return printErrorLog(e, decompressedFile);
         } catch (ParserConfigurationException e) {
@@ -69,11 +68,19 @@ public class AbletonFileFactory {
         } catch (SAXException e) {
             return printErrorLog(e, decompressedFile);
         }
+        result.creationFileTime = getCreationTimeStamp(file);
+
         return result;
     }
 
-    private FileTime getCreationTimeStamp(final File doc) throws IOException {
-        BasicFileAttributes attr = Files.readAttributes(doc.toPath(), BasicFileAttributes.class);
+    private FileTime getCreationTimeStamp(final File doc) {
+        BasicFileAttributes attr;
+        try {
+            attr = Files.readAttributes(doc.toPath(), BasicFileAttributes.class);
+        } catch (IOException e) {
+            logger.debug(e.getMessage());
+            throw new IllegalStateException("Could not read Ableton File", e);
+        }
         return attr.creationTime();
 
     }
