@@ -19,18 +19,13 @@ public class AbletonProject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-
     String name;
-
     @ManyToMany(cascade = CascadeType.PERSIST)
     List<Device> internalDevices;
-
     @ManyToMany(cascade = CascadeType.PERSIST)
     List<Device> externalDevices;
-
     @ManyToMany(cascade = CascadeType.PERSIST)
     List<DeviceManufacturer> manufacturers;
-
     Integer groupTracksCount;
     Integer midiTracksCount;
     Integer audioTracksCount;

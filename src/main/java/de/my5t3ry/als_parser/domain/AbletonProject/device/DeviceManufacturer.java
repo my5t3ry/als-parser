@@ -15,7 +15,6 @@ public class DeviceManufacturer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-
     private final String name;
 
     public DeviceManufacturer(final String manufacturerName) {

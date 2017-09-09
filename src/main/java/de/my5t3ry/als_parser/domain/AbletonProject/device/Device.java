@@ -15,10 +15,8 @@ public class Device implements Comparable<Device> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-
-    final String name;
-
-    Integer count;
+    private final String name;
+    private Integer count;
 
     public Device(final String name) {
         this.name = name;

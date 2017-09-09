@@ -20,7 +20,6 @@ import java.util.List;
 public class AbletonFileParser {
 
     private Logger logger = LoggerFactory.getLogger(AbletonFileParser.class);
-
     private AbletonFileFactory abletonFileFactory = new AbletonFileFactory();
 
     public List<AbletonProject> parseDirectory(final File directory) {
