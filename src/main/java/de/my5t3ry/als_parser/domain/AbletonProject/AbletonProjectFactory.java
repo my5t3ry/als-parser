@@ -57,11 +57,7 @@ public class AbletonProjectFactory {
             result.groupTracksCount = getTrackCount(doc, GROUP_TRACKS);
             result.midiTracksCount = getTrackCount(doc, MIDI_TRACKS);
             result.audioTracksCount = getTrackCount(doc, AUDIO_TRACKS);
-        } catch (IOException e) {
-            return printErrorLog(e, decompressedFile);
-        } catch (ParserConfigurationException e) {
-            return printErrorLog(e, decompressedFile);
-        } catch (SAXException e) {
+        } catch (IOException | ParserConfigurationException | SAXException e) {
             return printErrorLog(e, decompressedFile);
         }
         result.creationFileTime = getCreationTimeStamp(file);
