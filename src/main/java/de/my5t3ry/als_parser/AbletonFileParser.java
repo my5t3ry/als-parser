@@ -31,7 +31,7 @@ public class AbletonFileParser {
 
     public AbletonProject parse(final File file) {
         if (file.isDirectory()) {
-            throw new IllegalArgumentException("File is directory, pleas use parseDirectoryInstead()");
+            throw new IllegalArgumentException("File is directory, please use parseDirectoryInstead(File file)");
         }
         final GZipFile gZipFile = new GZipFile(file);
         try {

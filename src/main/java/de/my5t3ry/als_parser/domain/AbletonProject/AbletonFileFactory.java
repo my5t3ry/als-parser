@@ -2,6 +2,7 @@ package de.my5t3ry.als_parser.domain.AbletonProject;
 
 import de.my5t3ry.als_parser.domain.AbletonProject.device.Device;
 import de.my5t3ry.als_parser.domain.AbletonProject.device.DeviceManufacturer;
+import de.my5t3ry.als_parser.utils.XPathEvaluator;
 import de.my5t3ry.als_parser.utils.device_name_extractor.ExternalDeviceNameExtractor;
 import de.my5t3ry.als_parser.utils.device_name_extractor.IExtractDeviceNames;
 import de.my5t3ry.als_parser.utils.device_name_extractor.InternalDeviceNameExtractor;
@@ -16,7 +17,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class AbletonFileFactory {
     private final String MIDI_TRACKS = "count(.//LiveSet//Tracks//MidiTrack)";
     private final String AUDIO_TRACKS = "count(.//LiveSet//Tracks//AudioTrack)";
 
-    public final AbletonProject build(final File decompressedFile,final File file) {
+    public final AbletonProject build(final File decompressedFile, final File file) {
         final AbletonProject result = new AbletonProject();
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
@@ -83,42 +83,31 @@ public class AbletonFileFactory {
     }
 
     private Integer getTrackCount(final Document doc, final String path) {
-        try {
-            return ((Double) xPath.compile(path).evaluate(doc, XPathConstants.NUMBER)).intValue();
-        } catch (XPathExpressionException e) {
-            throw new IllegalStateException("Could not read Ableton File", e);
-        }
+        return ((Double)XPathEvaluator.query(path, doc, XPathConstants.NUMBER)).intValue();
+
     }
 
     private List<DeviceManufacturer> getManufacturers(final Document doc) {
         final Set<DeviceManufacturer> result = new HashSet<>();
-        try {
-            final NodeList nodeList = (NodeList) xPath.compile(MANUFACTURER).evaluate(doc, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                final String manufacturerName = nodeList.item(i).getAttributes().item(0).getNodeValue();
-                result.add(new DeviceManufacturer(manufacturerName));
-            }
-        } catch (XPathExpressionException e) {
-            throw new IllegalStateException("Could not read Ableton File", e);
+        final NodeList nodeList = (NodeList) XPathEvaluator.query(MANUFACTURER, doc, XPathConstants.NODESET);
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            final String manufacturerName = nodeList.item(i).getAttributes().item(0).getNodeValue();
+            result.add(new DeviceManufacturer(manufacturerName));
         }
         return new ArrayList<>(result);
     }
 
     private ArrayList<Device> getDevices(final Document doc, final String path, final IExtractDeviceNames deviceNameExtractor) {
         final ArrayList<Device> result = new ArrayList();
-        try {
-            final NodeList nodeList = (NodeList) xPath.compile(path).evaluate(doc, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                final String deviceName = deviceNameExtractor.extractName(nodeList.item(i));
-                final Device device = new Device(deviceName);
-                if (result.contains(device)) {
-                    result.get(result.indexOf(device)).addDevice();
-                } else {
-                    result.add(device);
-                }
+        final NodeList nodeList = (NodeList) XPathEvaluator.query(path, doc, XPathConstants.NODESET);
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            final String deviceName = deviceNameExtractor.extractName(nodeList.item(i));
+            final Device device = new Device(deviceName);
+            if (result.contains(device)) {
+                result.get(result.indexOf(device)).addDevice();
+            } else {
+                result.add(device);
             }
-        } catch (XPathExpressionException e) {
-            throw new IllegalStateException("Could not read Ableton File", e);
         }
         return result;
     }
