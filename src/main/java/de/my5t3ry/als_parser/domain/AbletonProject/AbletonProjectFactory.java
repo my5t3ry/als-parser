@@ -32,9 +32,9 @@ import java.util.Set;
  * created by: sascha.bast
  * since: 29.08.17
  */
-public class AbletonFileFactory {
+public class AbletonProjectFactory {
 
-    Logger logger = LoggerFactory.getLogger(AbletonFileFactory.class);
+    Logger logger = LoggerFactory.getLogger(AbletonProjectFactory.class);
 
     private final XPath xPath = XPathFactory.newInstance().newXPath();
     private final String INTERNAL_DEVICES_PATH = ".//LiveSet//Tracks//DeviceChain//Devices[1]/*";
