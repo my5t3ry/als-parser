@@ -37,7 +37,6 @@ public class AbletonProject {
     FileTime creationFileTime;
     private SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
-
     public Integer getTotalTracks() {
         return groupTracksCount + midiTracksCount + audioTracksCount;
     }

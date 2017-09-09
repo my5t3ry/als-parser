@@ -41,9 +41,7 @@ public class Device implements Comparable<Device> {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         final Device device = (Device) o;
-
         return name != null ? name.equals(device.name) : device.name == null;
     }
 

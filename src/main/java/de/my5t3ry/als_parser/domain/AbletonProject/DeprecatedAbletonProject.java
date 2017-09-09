@@ -7,7 +7,6 @@ import java.util.ArrayList;
  * since: 08.09.17
  */
 public class DeprecatedAbletonProject extends AbletonProject{
-
     public DeprecatedAbletonProject() {
         this.internalDevices = new ArrayList<>();
         this.externalDevices = new ArrayList<>();

@@ -28,6 +28,7 @@ public class AbletonParserTest {
         assertEquals(abletonProject.getMidiTracksCount(), new Integer(22));
         assertEquals(abletonProject.getAudioTracksCount(), new Integer(0));
     }
+    
     @Test
     public void parseDirectory() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();

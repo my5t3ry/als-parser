@@ -123,7 +123,6 @@ public class AbletonFileFactory {
         return result;
     }
 
-
     private AbletonProject printErrorLog(final Exception e, final File file) {
         logger.debug("Could not read file, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
         logger.debug(e.getMessage());
