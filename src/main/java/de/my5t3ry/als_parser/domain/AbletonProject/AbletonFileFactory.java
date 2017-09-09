@@ -36,7 +36,6 @@ public class AbletonFileFactory {
 
     Logger logger = LoggerFactory.getLogger(AbletonFileFactory.class);
 
-
     private final XPath xPath = XPathFactory.newInstance().newXPath();
     private final String INTERNAL_DEVICES_PATH = ".//LiveSet//Tracks//DeviceChain//Devices[1]/*";
     private final String EXTERNAL_VST = ".//LiveSet//Tracks//DeviceChain//Devices//PluginDevice//PluginDesc//VstPluginInfo//PlugName";
@@ -69,20 +68,18 @@ public class AbletonFileFactory {
             return printErrorLog(e, decompressedFile);
         }
         result.creationFileTime = getCreationTimeStamp(file);
-
         return result;
     }
 
-    private FileTime getCreationTimeStamp(final File doc) {
+    private FileTime getCreationTimeStamp(final File file) {
         BasicFileAttributes attr;
         try {
-            attr = Files.readAttributes(doc.toPath(), BasicFileAttributes.class);
+            attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
         } catch (IOException e) {
             logger.debug(e.getMessage());
-            throw new IllegalStateException("Could not read Ableton File", e);
+            throw new IllegalStateException("Could not read Ableton File: '".concat(file.getAbsolutePath()).concat("'"), e);
         }
         return attr.creationTime();
-
     }
 
     private Integer getTrackCount(final Document doc, final String path) {
