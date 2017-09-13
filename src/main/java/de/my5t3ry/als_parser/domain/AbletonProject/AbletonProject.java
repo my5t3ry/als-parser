@@ -6,6 +6,7 @@ import de.my5t3ry.als_parser.domain.AbletonProject.device.DeviceManufacturer;
 import javax.persistence.*;
 import java.nio.file.attribute.FileTime;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,6 +66,9 @@ public class AbletonProject {
     }
 
     public String getCreationFileTimeAsString() {
+        if(creationFileTime == null){
+            return df.format(new Date());
+        }
         return df.format(creationFileTime.toMillis());
     }
 
