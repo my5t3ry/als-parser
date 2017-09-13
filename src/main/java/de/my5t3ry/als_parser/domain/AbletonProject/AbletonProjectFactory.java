@@ -61,6 +61,7 @@ public class AbletonProjectFactory {
             return printErrorLog(e, decompressedFile);
         }
         result.creationFileTime = getCreationTimeStamp(file);
+        result.id = result.name.concat(result.getCreationFileTimeAsString());
         return result;
     }
 

@@ -19,7 +19,7 @@ public class AbletonProject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
+    protected String id;
     String name;
     @ManyToMany(cascade = CascadeType.PERSIST)
     List<Device> internalDevices;
@@ -31,6 +31,8 @@ public class AbletonProject {
     Integer midiTracksCount;
     Integer audioTracksCount;
     FileTime creationFileTime;
+
+
     private SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
     public Integer getTotalTracks() {
@@ -66,7 +68,7 @@ public class AbletonProject {
     }
 
     public String getCreationFileTimeAsString() {
-        if(creationFileTime == null){
+        if (creationFileTime == null) {
             return df.format(new Date());
         }
         return df.format(creationFileTime.toMillis());
