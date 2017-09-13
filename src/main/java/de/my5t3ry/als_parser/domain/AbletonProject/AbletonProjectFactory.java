@@ -21,10 +21,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * created by: sascha.bast
@@ -41,6 +39,8 @@ public class AbletonProjectFactory {
     private final String GROUP_TRACKS = "count(.//LiveSet//Tracks//GroupTrack)";
     private final String MIDI_TRACKS = "count(.//LiveSet//Tracks//MidiTrack)";
     private final String AUDIO_TRACKS = "count(.//LiveSet//Tracks//AudioTrack)";
+    private SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+
 
     public final AbletonProject build(final File decompressedFile, final File file) {
         final AbletonProject result = new AbletonProject();
@@ -60,8 +60,7 @@ public class AbletonProjectFactory {
         } catch (IOException | ParserConfigurationException | SAXException e) {
             return printErrorLog(e, decompressedFile);
         }
-        result.creationFileTime = getCreationTimeStamp(file);
-        result.id = result.name.concat(result.getCreationFileTimeAsString());
+        result.creationFileTime = df.format(getCreationTimeStamp(file).toMillis());
         return result;
     }
 
@@ -73,7 +72,10 @@ public class AbletonProjectFactory {
             logger.debug(e.getMessage());
             throw new IllegalStateException("Could not read Ableton File: '".concat(file.getAbsolutePath()).concat("'"), e);
         }
-        return attr.creationTime();
+        if (attr.creationTime() != null) {
+            return attr.creationTime();
+        }
+        return FileTime.fromMillis(new Date().getTime());
     }
 
     private Integer getTrackCount(final Document doc, final String path) {
