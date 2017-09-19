@@ -41,7 +41,6 @@ public class AbletonProjectFactory {
     private final String AUDIO_TRACKS = "count(.//LiveSet//Tracks//AudioTrack)";
     private SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
-
     public final AbletonProject build(final File decompressedFile, final File file) {
         final AbletonProject result = new AbletonProject();
         try {
