@@ -15,7 +15,10 @@ public class DeviceManufacturer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-    private final String name;
+    private  String name;
+
+    public DeviceManufacturer() {
+    }
 
     public DeviceManufacturer(final String manufacturerName) {
         this.name = manufacturerName;

@@ -39,6 +39,7 @@ public class AbletonProjectFactory {
     private final String GROUP_TRACKS = "count(.//LiveSet//Tracks//GroupTrack)";
     private final String MIDI_TRACKS = "count(.//LiveSet//Tracks//MidiTrack)";
     private final String AUDIO_TRACKS = "count(.//LiveSet//Tracks//AudioTrack)";
+    private final String ABLETEO_VERSION = "/*/@Creator";
     private SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
     public final AbletonProject build(final File decompressedFile, final File file) {
@@ -56,6 +57,7 @@ public class AbletonProjectFactory {
             result.groupTracksCount = getTrackCount(doc, GROUP_TRACKS);
             result.midiTracksCount = getTrackCount(doc, MIDI_TRACKS);
             result.audioTracksCount = getTrackCount(doc, AUDIO_TRACKS);
+            result.abletonVersion = getABletonVersion(doc);
         } catch (IOException | ParserConfigurationException | SAXException e) {
             return printErrorLog(e, decompressedFile);
         }
@@ -77,6 +79,10 @@ public class AbletonProjectFactory {
         return FileTime.fromMillis(new Date().getTime());
     }
 
+    public String  getABletonVersion(final Document doc){
+        return ((String) XPathEvaluator.query(ABLETEO_VERSION, doc, XPathConstants.STRING));
+
+    }
     private Integer getTrackCount(final Document doc, final String path) {
         return ((Double) XPathEvaluator.query(path, doc, XPathConstants.NUMBER)).intValue();
     }

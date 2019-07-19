@@ -4,7 +4,6 @@ import de.my5t3ry.als_parser.domain.AbletonProject.device.Device;
 import de.my5t3ry.als_parser.domain.AbletonProject.device.DeviceManufacturer;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +13,10 @@ import java.util.stream.Collectors;
  */
 @Entity
 public class AbletonProject {
+    public String abletonVersion;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected String id;
+    protected Integer id;
     String name;
     @ManyToMany(cascade = CascadeType.PERSIST)
     List<Device> internalDevices;
@@ -64,6 +64,9 @@ public class AbletonProject {
     }
 
 
+    public String getAbletonVersion() {
+        return abletonVersion;
+    }
 
     public String getCreationFileTime() {
         return creationFileTime;
