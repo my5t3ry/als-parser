@@ -30,7 +30,6 @@ public class AbletonProject {
     String creationFileTime;
 
 
-
     public Integer getTotalTracks() {
         return groupTracksCount + midiTracksCount + audioTracksCount;
     }
