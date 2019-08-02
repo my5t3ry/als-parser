@@ -29,6 +29,13 @@ public class AbletonProject {
     Integer audioTracksCount;
     String creationFileTime;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public Integer getTotalTracks() {
         return groupTracksCount + midiTracksCount + audioTracksCount;
