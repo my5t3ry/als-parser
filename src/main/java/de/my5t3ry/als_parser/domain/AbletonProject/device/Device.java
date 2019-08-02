@@ -1,5 +1,7 @@
 package de.my5t3ry.als_parser.domain.AbletonProject.device;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,13 +12,14 @@ import javax.persistence.Id;
  * since: 30.08.17
  */
 @Entity
+@Data
 public class Device implements Comparable<Device> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-    private  String name;
-    private Integer count;
+    private String name;
+    private Integer count = 0;
 
     public Device() {
     }
@@ -26,16 +29,17 @@ public class Device implements Comparable<Device> {
         this.count = 1;
     }
 
+
     public void addDevice() {
         count++;
     }
 
-    public String getName() {
-        return name;
+    public Long getId() {
+        return id;
     }
 
-    public Integer getCount() {
-        return count;
+    public void setId(final Long id) {
+        this.id = id;
     }
 
     @Override

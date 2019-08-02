@@ -1,9 +1,11 @@
 package de.my5t3ry.als_parser.domain.AbletonProject;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import de.my5t3ry.als_parser.domain.AbletonProject.device.Device;
 import de.my5t3ry.als_parser.domain.AbletonProject.device.DeviceManufacturer;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,11 +21,11 @@ public class AbletonProject {
     protected Integer id;
     String name;
     @ManyToMany(cascade = CascadeType.PERSIST)
-    List<Device> internalDevices;
+    List<Device> internalDevices = new ArrayList<>();
     @ManyToMany(cascade = CascadeType.PERSIST)
-    List<Device> externalDevices;
+    List<Device> externalDevices = new ArrayList<>();
     @ManyToMany(cascade = CascadeType.PERSIST)
-    List<DeviceManufacturer> manufacturers;
+    List<DeviceManufacturer> manufacturers = new ArrayList<>();
     Integer groupTracksCount;
     Integer midiTracksCount;
     Integer audioTracksCount;
@@ -37,6 +39,7 @@ public class AbletonProject {
         return name;
     }
 
+    @JsonProperty
     public Integer getTotalTracks() {
         return groupTracksCount + midiTracksCount + audioTracksCount;
     }
@@ -65,6 +68,7 @@ public class AbletonProject {
         return audioTracksCount;
     }
 
+    @JsonProperty
     public Integer getTotalDeviceCount() {
         return internalDevices.stream().collect(Collectors.summingInt(d -> d.getCount())) + externalDevices.stream().collect(Collectors.summingInt(d -> d.getCount()));
     }
