@@ -5,7 +5,7 @@
 
     <groupId>de.my5t3ry</groupId>
     <artifactId>als-parser</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>als-parser</name>
