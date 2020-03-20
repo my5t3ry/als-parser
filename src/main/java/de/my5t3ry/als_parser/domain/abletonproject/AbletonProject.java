@@ -1,10 +1,11 @@
-package de.my5t3ry.als_parser.domain.abletonproject;
+package de.my5t3ry.als_parser.domain.AbletonProject;
 
-import de.my5t3ry.als_parser.domain.abletonproject.device.Device;
-import de.my5t3ry.als_parser.domain.abletonproject.device.DeviceManufacturer;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import de.my5t3ry.als_parser.domain.AbletonProject.device.Device;
+import de.my5t3ry.als_parser.domain.AbletonProject.device.DeviceManufacturer;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,24 +14,32 @@ import java.util.stream.Collectors;
  * since: 29.08.17
  */
 @Entity
-@NoArgsConstructor
 public class AbletonProject {
+    public String abletonVersion;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Integer id;
     String name;
     @ManyToMany(cascade = CascadeType.PERSIST)
-    List<Device> internalDevices;
+    List<Device> internalDevices = new ArrayList<>();
     @ManyToMany(cascade = CascadeType.PERSIST)
-    List<Device> externalDevices;
+    List<Device> externalDevices = new ArrayList<>();
     @ManyToMany(cascade = CascadeType.PERSIST)
-    List<DeviceManufacturer> manufacturers;
+    List<DeviceManufacturer> manufacturers = new ArrayList<>();
     Integer groupTracksCount;
     Integer midiTracksCount;
     Integer audioTracksCount;
     String creationFileTime;
 
+    public Integer getId() {
+        return id;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    @JsonProperty
     public Integer getTotalTracks() {
         return groupTracksCount + midiTracksCount + audioTracksCount;
     }
@@ -59,11 +68,15 @@ public class AbletonProject {
         return audioTracksCount;
     }
 
+    @JsonProperty
     public Integer getTotalDeviceCount() {
         return internalDevices.stream().collect(Collectors.summingInt(d -> d.getCount())) + externalDevices.stream().collect(Collectors.summingInt(d -> d.getCount()));
     }
 
 
+    public String getAbletonVersion() {
+        return abletonVersion;
+    }
 
     public String getCreationFileTime() {
         return creationFileTime;

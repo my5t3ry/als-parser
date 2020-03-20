@@ -1,6 +1,6 @@
-package de.my5t3ry.als_parser.domain.abletonproject.device;
+package de.my5t3ry.als_parser.domain.AbletonProject.device;
 
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,30 +12,34 @@ import javax.persistence.Id;
  * since: 30.08.17
  */
 @Entity
-@NoArgsConstructor
+@Data
 public class Device implements Comparable<Device> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
     private String name;
-    private Integer count;
+    private Integer count = 0;
+
+    public Device() {
+    }
 
     public Device(final String name) {
         this.name = name;
         this.count = 1;
     }
 
+
     public void addDevice() {
         count++;
     }
 
-    public String getName() {
-        return name;
+    public Long getId() {
+        return id;
     }
 
-    public Integer getCount() {
-        return count;
+    public void setId(final Long id) {
+        this.id = id;
     }
 
     @Override
