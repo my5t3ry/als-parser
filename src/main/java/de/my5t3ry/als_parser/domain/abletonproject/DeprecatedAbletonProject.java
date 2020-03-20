@@ -1,4 +1,4 @@
-package de.my5t3ry.als_parser.domain.AbletonProject;
+package de.my5t3ry.als_parser.domain.abletonproject;
 
 import java.util.ArrayList;
 

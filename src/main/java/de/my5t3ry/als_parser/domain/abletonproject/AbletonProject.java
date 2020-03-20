@@ -1,10 +1,10 @@
-package de.my5t3ry.als_parser.domain.AbletonProject;
+package de.my5t3ry.als_parser.domain.abletonproject;
 
-import de.my5t3ry.als_parser.domain.AbletonProject.device.Device;
-import de.my5t3ry.als_parser.domain.AbletonProject.device.DeviceManufacturer;
+import de.my5t3ry.als_parser.domain.abletonproject.device.Device;
+import de.my5t3ry.als_parser.domain.abletonproject.device.DeviceManufacturer;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,9 +13,10 @@ import java.util.stream.Collectors;
  * since: 29.08.17
  */
 @Entity
+@NoArgsConstructor
 public class AbletonProject {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected String id;
     String name;
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -28,7 +29,6 @@ public class AbletonProject {
     Integer midiTracksCount;
     Integer audioTracksCount;
     String creationFileTime;
-
 
 
     public Integer getTotalTracks() {

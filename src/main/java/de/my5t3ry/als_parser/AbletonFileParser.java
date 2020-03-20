@@ -1,8 +1,8 @@
 package de.my5t3ry.als_parser;
 
-import de.my5t3ry.als_parser.domain.AbletonProject.AbletonProjectFactory;
-import de.my5t3ry.als_parser.domain.AbletonProject.AbletonProject;
-import de.my5t3ry.als_parser.domain.AbletonProject.DeprecatedAbletonProject;
+import de.my5t3ry.als_parser.domain.abletonproject.AbletonProject;
+import de.my5t3ry.als_parser.domain.abletonproject.AbletonProjectFactory;
+import de.my5t3ry.als_parser.domain.abletonproject.DeprecatedAbletonProject;
 import de.my5t3ry.als_parser.utils.GZipFile;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -35,8 +35,9 @@ public class AbletonFileParser {
         }
         final GZipFile gZipFile = new GZipFile(file);
         try {
-            gZipFile.decompress(new File(System.getProperty("java.io.tmpdir") + file.getName()));
-            return abletonProjectFactory.build(new File(System.getProperty("java.io.tmpdir") + file.getName()), file);
+            final File decompressedFile = new File(System.getProperty("java.io.tmpdir") + "/" + file.getName());
+            gZipFile.decompress(decompressedFile);
+            return abletonProjectFactory.build(decompressedFile, file);
         } catch (IOException e) {
             logger.debug("Could not read file, maybe deprecated Ableton version:'" + file.getAbsolutePath() + "'  ");
             logger.debug(e.getMessage());

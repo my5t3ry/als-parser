@@ -1,7 +1,7 @@
 package de.my5t3ry;
 
 import de.my5t3ry.als_parser.AbletonFileParser;
-import de.my5t3ry.als_parser.domain.AbletonProject.AbletonProject;
+import de.my5t3ry.als_parser.domain.abletonproject.AbletonProject;
 import org.junit.Test;
 
 import java.io.File;
@@ -20,7 +20,7 @@ public class AbletonParserTest {
     @Test
     public void parseFile() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("20170428.als").getFile());
+        File file = new File(classLoader.getResource("20200126.als").getFile());
         final AbletonProject abletonProject = cut.parse(file);
         assertEquals(abletonProject.getTotalTracks(), new Integer(25));
         assertEquals(abletonProject.getInternalDevices().size(), 13);

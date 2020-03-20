@@ -1,4 +1,6 @@
-package de.my5t3ry.als_parser.domain.AbletonProject.device;
+package de.my5t3ry.als_parser.domain.abletonproject.device;
+
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,12 +12,13 @@ import javax.persistence.Id;
  * since: 30.08.17
  */
 @Entity
+@NoArgsConstructor
 public class Device implements Comparable<Device> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-    private final String name;
+    private String name;
     private Integer count;
 
     public Device(final String name) {

@@ -1,7 +1,7 @@
-package de.my5t3ry.als_parser.domain.AbletonProject;
+package de.my5t3ry.als_parser.domain.abletonproject;
 
-import de.my5t3ry.als_parser.domain.AbletonProject.device.Device;
-import de.my5t3ry.als_parser.domain.AbletonProject.device.DeviceManufacturer;
+import de.my5t3ry.als_parser.domain.abletonproject.device.Device;
+import de.my5t3ry.als_parser.domain.abletonproject.device.DeviceManufacturer;
 import de.my5t3ry.als_parser.utils.XPathEvaluator;
 import de.my5t3ry.als_parser.utils.device_name_extractor.ExternalDeviceNameExtractor;
 import de.my5t3ry.als_parser.utils.device_name_extractor.IExtractDeviceNames;
@@ -39,6 +39,7 @@ public class AbletonProjectFactory {
     private final String GROUP_TRACKS = "count(.//LiveSet//Tracks//GroupTrack)";
     private final String MIDI_TRACKS = "count(.//LiveSet//Tracks//MidiTrack)";
     private final String AUDIO_TRACKS = "count(.//LiveSet//Tracks//AudioTrack)";
+
     private SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
     public final AbletonProject build(final File decompressedFile, final File file) {
